@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Certificate Verification</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="verification-container">
+
+        <h1>Certificate Verification</h1>
+
+        <p>
+            Verify the authenticity of certificates
+            issued during our hackathon.
+        </p>
+
+        <input
+            type="text"
+            id="certificateId"
+            placeholder="Enter Certificate ID"
+        >
+
+        <button onclick="verifyCertificate()">
+            Verify Certificate
+        </button>
+
+    </main>
+
+    <script>
+
+        function verifyCertificate() {
+
+            const certificateId =
+                document.getElementById("certificateId")
+                .value.trim();
+
+            if (certificateId === "") {
+
+                alert("Please enter a Certificate ID");
+
+                return;
+            }
+
+            window.location.href =
+                "verify.html?id=" +
+                encodeURIComponent(certificateId);
+        }
+
+    </script>
+
+</body>
+
+</html>

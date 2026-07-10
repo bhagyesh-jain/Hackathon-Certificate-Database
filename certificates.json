@@ -1,0 +1,10 @@
+[
+  {
+    "certificateId": "HACK26-TEST123",
+    "name": "Test Participant",
+    "team": "Test Team",
+    "type": "Participation",
+    "domain": "Web Development",
+    "certificate": ""
+  }
+]
