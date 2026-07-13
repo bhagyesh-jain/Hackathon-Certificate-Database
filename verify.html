@@ -1,132 +1,353 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Verify Certificate | IKIGAI 2026</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta
+        name="description"
+        content="Verify certificates issued by IKIGAI 2026"
+    >
+
+    <title>
+        Verify Certificate | IKIGAI 2026
+    </title>
+
+
+    <!-- APPLY SAVED THEME BEFORE PAGE LOAD -->
+
+    <script>
+
+        (function () {
+
+            const savedTheme =
+                localStorage.getItem("ikigai-theme");
+
+            const prefersLight =
+                window.matchMedia(
+                    "(prefers-color-scheme: light)"
+                ).matches;
+
+            const theme =
+                savedTheme ||
+                (prefersLight ? "light" : "dark");
+
+            document.documentElement.setAttribute(
+                "data-theme",
+                theme
+            );
+
+        })();
+
+    </script>
+
+
+    <!-- GOOGLE FONTS -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
 
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
         rel="stylesheet"
     >
 
-    <link rel="stylesheet" href="style.css">
+
+    <!-- MAIN STYLESHEET -->
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
 </head>
+
 
 <body>
 
-    <!-- BACKGROUND -->
 
-    <div class="background-effects">
+    <!-- =====================================
+         BACKGROUND EFFECTS
+    ====================================== -->
+
+    <div
+        class="background-effects"
+        aria-hidden="true"
+    >
+
         <div class="orb orb-one"></div>
+
         <div class="orb orb-two"></div>
+
         <div class="orb orb-three"></div>
+
         <div class="grid-overlay"></div>
+
     </div>
 
 
-    <!-- NAVBAR -->
+
+    <!-- =====================================
+         NAVIGATION
+    ====================================== -->
 
     <nav class="navbar">
 
-        <a href="index.html" class="brand">
 
-            <div class="brand-icon">I</div>
+        <!-- BRAND -->
 
-            <div>
-                <span class="brand-name">IKIGAI</span>
-                <span class="brand-year">2026</span>
+        <a
+            href="index.html"
+            class="brand"
+            aria-label="IKIGAI 2026 Home"
+        >
+
+
+            <div class="brand-icon">
+
+                I
+
             </div>
+
+
+            <div class="brand-information">
+
+
+                <span class="brand-name">
+
+                    IKIGAI
+
+                </span>
+
+
+                <span class="brand-year">
+
+                    2026
+
+                </span>
+
+
+            </div>
+
 
         </a>
 
 
-        <div class="nav-status">
 
-            <span class="status-dot"></span>
+        <!-- NAVIGATION ACTIONS -->
 
-            Official Verification Portal
-
-        </div>
-
-    </nav>
+        <div class="nav-actions">
 
 
-    <!-- MAIN -->
+            <!-- SYSTEM STATUS -->
 
-    <main class="verify-page">
-
-        <section class="verify-container">
-
-            <!-- Loading State -->
-
-            <div id="loadingState" class="result-card loading-card">
-
-                <div class="loading-animation">
-
-                    <div class="loader-ring"></div>
-
-                    <div class="loader-center">
-                        I
-                    </div>
-
-                </div>
+            <div class="nav-status">
 
 
-                <h1>
-                    Verifying Certificate
-                </h1>
+                <span class="status-dot"></span>
 
 
-                <p>
-                    Checking the certificate against the
-                    official IKIGAI 2026 database.
-                </p>
+                <span>
 
+                    Official Verification Portal
 
-                <div class="loading-line">
+                </span>
 
-                    <div class="loading-progress"></div>
-
-                </div>
 
             </div>
 
 
-            <!-- Result gets inserted here -->
 
-            <div id="result"></div>
+            <!-- THEME TOGGLE -->
+
+            <button
+                id="themeToggle"
+                class="theme-toggle"
+                type="button"
+                aria-label="Change website theme"
+            >
+
+                <!-- Added automatically by theme.js -->
+
+            </button>
+
+
+        </div>
+
+
+    </nav>
+
+
+
+    <!-- =====================================
+         VERIFICATION PAGE
+    ====================================== -->
+
+    <main class="verify-page">
+
+
+        <section class="verify-container">
+
+
+
+            <!-- =================================
+                 LOADING STATE
+            ================================== -->
+
+            <div
+                id="loadingState"
+                class="result-card loading-card"
+            >
+
+
+                <!-- LOADING ICON -->
+
+                <div class="loading-animation">
+
+
+                    <div class="loader-ring"></div>
+
+
+                    <div class="loader-center">
+
+                        I
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- LOADING HEADING -->
+
+                <h1>
+
+                    Verifying Certificate
+
+                </h1>
+
+
+
+                <!-- LOADING DESCRIPTION -->
+
+                <p>
+
+                    Checking the certificate against
+                    the official IKIGAI 2026
+                    certificate database.
+
+                </p>
+
+
+
+                <!-- LOADING PROGRESS BAR -->
+
+                <div class="loading-line">
+
+
+                    <div class="loading-progress"></div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================
+                 RESULT CONTAINER
+            ================================== -->
+
+            <div
+                id="result"
+                aria-live="polite"
+            >
+
+                <!--
+                    Certificate verification result
+                    is generated by verify.js
+                -->
+
+            </div>
+
 
         </section>
+
 
     </main>
 
 
-    <!-- FOOTER -->
+
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
 
     <footer>
 
-        <div>
+
+        <!-- COPYRIGHT -->
+
+        <div class="footer-copyright">
+
             © 2026 IKIGAI Hackathon
+
         </div>
 
+
+
+        <!-- SYSTEM STATUS -->
 
         <div class="footer-status">
 
+
             <span class="status-dot"></span>
 
-            Verification System Online
+
+            <span>
+
+                Verification System Online
+
+            </span>
+
 
         </div>
+
 
     </footer>
 
 
+
+    <!-- =====================================
+         THEME SYSTEM
+    ====================================== -->
+
+    <script src="theme.js"></script>
+
+
+
+    <!-- =====================================
+         CERTIFICATE VERIFICATION
+    ====================================== -->
+
     <script src="verify.js"></script>
 
+
 </body>
+
 </html>

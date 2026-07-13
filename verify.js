@@ -1,3 +1,8 @@
+// ==========================================
+// IKIGAI 2026 CERTIFICATE VERIFICATION
+// ==========================================
+
+
 async function verifyCertificate() {
 
     const loadingState =
@@ -7,20 +12,25 @@ async function verifyCertificate() {
         document.getElementById("result");
 
 
+    // ======================================
     // READ CERTIFICATE ID FROM URL
+    // ======================================
 
     const params =
         new URLSearchParams(window.location.search);
+
 
     const certificateId =
         params.get("id");
 
 
+    // ======================================
     // INVALID URL
+    // ======================================
 
     if (!certificateId) {
 
-        await delay(1000);
+        await delay(900);
 
         loadingState.style.display = "none";
 
@@ -32,10 +42,18 @@ async function verifyCertificate() {
 
     try {
 
-        // LOAD JSON DATABASE
+
+        // ==================================
+        // LOAD CERTIFICATE DATABASE
+        // ==================================
 
         const response =
-            await fetch("certificates.json");
+            await fetch(
+                "certificates.json",
+                {
+                    cache: "no-store"
+                }
+            );
 
 
         if (!response.ok) {
@@ -51,36 +69,44 @@ async function verifyCertificate() {
             await response.json();
 
 
-        // SEARCH CERTIFICATE
+
+        // ==================================
+        // SEARCH FOR CERTIFICATE
+        // ==================================
 
         const certificate =
             certificates.find(
 
                 item =>
 
-                    String(item.certificateId)
-                        .trim()
-                        .toUpperCase()
+                    normalizeCertificateId(
+                        item.certificateId
+                    )
 
                     ===
 
-                    String(certificateId)
-                        .trim()
-                        .toUpperCase()
+                    normalizeCertificateId(
+                        certificateId
+                    )
 
             );
 
 
-        // SMALL DELAY FOR VERIFICATION EFFECT
 
-        await delay(1400);
+        // ==================================
+        // SMALL VERIFICATION DELAY
+        // ==================================
+
+        await delay(1300);
 
 
-        loadingState.style.display =
-            "none";
+        loadingState.style.display = "none";
 
 
+
+        // ==================================
         // CERTIFICATE FOUND
+        // ==================================
 
         if (certificate) {
 
@@ -90,7 +116,10 @@ async function verifyCertificate() {
 
         }
 
+
+        // ==================================
         // CERTIFICATE NOT FOUND
+        // ==================================
 
         else {
 
@@ -101,12 +130,23 @@ async function verifyCertificate() {
         }
 
 
-    } catch (error) {
-
-        console.error(error);
+    }
 
 
-        await delay(800);
+    // ======================================
+    // SYSTEM ERROR
+    // ======================================
+
+    catch (error) {
+
+
+        console.error(
+            "Certificate verification error:",
+            error
+        );
+
+
+        await delay(700);
 
 
         loadingState.style.display =
@@ -121,203 +161,319 @@ async function verifyCertificate() {
 
 
 
-/* =========================================
-   VERIFIED CERTIFICATE
-========================================= */
+// ==========================================
+// VERIFIED CERTIFICATE
+// ==========================================
 
 
 function showVerifiedCertificate(certificate) {
+
 
     const result =
         document.getElementById("result");
 
 
+
+    // ======================================
+    // READ CERTIFICATE DATA
+    // ======================================
+
+
+    const certificateName =
+        certificate.name ||
+        "Participant";
+
+
+    const certificateTeam =
+        certificate.team ||
+        "Individual Participant";
+
+
+    const certificateType =
+        certificate.type ||
+        "Participation";
+
+
+    const certificateDomain =
+        certificate.domain ||
+        "—";
+
+
+    const certificateId =
+        certificate.certificateId ||
+        "—";
+
+
     const certificateLink =
-        certificate.certificate || "";
+        certificate.certificate ||
+        "";
+
+
+
+    // ======================================
+    // GENERATE VERIFIED UI
+    // ======================================
 
 
     result.innerHTML = `
 
+
         <div class="result-card verified-result">
+
+
+            <!-- ==========================
+                 SUCCESS ICON
+            =========================== -->
+
 
             <div class="success-animation">
 
+
                 <div class="success-ring">
 
-                    <span>✓</span>
+
+                    <span>
+
+                        ✓
+
+                    </span>
+
 
                 </div>
 
+
             </div>
+
+
+
+            <!-- ==========================
+                 VERIFIED BADGE
+            =========================== -->
 
 
             <div class="verified-badge">
 
+
                 <span></span>
 
+
                 AUTHENTIC CERTIFICATE
+
 
             </div>
 
 
+
+            <!-- ==========================
+                 RESULT HEADING
+            =========================== -->
+
+
             <h1>
+
                 Certificate Verified
+
             </h1>
+
 
 
             <p class="result-description">
 
                 This certificate has been successfully
-                verified against the official
-                IKIGAI 2026 certificate database.
+                verified against the official IKIGAI 2026
+                certificate database.
 
             </p>
 
 
+
+            <!-- ==========================
+                 PARTICIPANT
+            =========================== -->
+
+
             <div class="participant-section">
 
+
                 <span class="section-label">
+
                     CERTIFICATE ISSUED TO
+
                 </span>
 
 
+
                 <h2>
-                    ${escapeHTML(certificate.name)}
+
+                    ${escapeHTML(certificateName)}
+
                 </h2>
 
 
+
                 <p>
-                    ${escapeHTML(
-                        certificate.team || "Individual Participant"
-                    )}
+
+                    ${escapeHTML(certificateTeam)}
+
                 </p>
 
+
             </div>
+
+
+
+            <!-- ==========================
+                 CERTIFICATE INFORMATION
+            =========================== -->
 
 
             <div class="certificate-information">
 
 
+
+                <!-- CERTIFICATE ID -->
+
+
                 <div class="info-item">
 
+
                     <span class="info-label">
+
                         Certificate ID
+
                     </span>
 
+
                     <strong>
-                        ${escapeHTML(
-                            certificate.certificateId
-                        )}
+
+                        ${escapeHTML(certificateId)}
+
                     </strong>
+
 
                 </div>
 
 
+
+                <!-- CERTIFICATE TYPE -->
+
+
                 <div class="info-item">
 
+
                     <span class="info-label">
+
                         Certificate Type
+
                     </span>
 
+
                     <strong>
-                        ${escapeHTML(
-                            certificate.type ||
-                            "Participation"
-                        )}
+
+                        ${escapeHTML(certificateType)}
+
                     </strong>
+
 
                 </div>
 
 
+
+                <!-- TEAM -->
+
+
                 <div class="info-item">
 
+
                     <span class="info-label">
+
                         Team
+
                     </span>
 
+
                     <strong>
-                        ${escapeHTML(
-                            certificate.team ||
-                            "—"
-                        )}
+
+                        ${escapeHTML(certificateTeam)}
+
                     </strong>
+
 
                 </div>
 
 
+
+                <!-- DOMAIN -->
+
+
                 <div class="info-item">
 
+
                     <span class="info-label">
+
                         Domain
+
                     </span>
 
+
                     <strong>
-                        ${escapeHTML(
-                            certificate.domain ||
-                            "—"
-                        )}
+
+                        ${escapeHTML(certificateDomain)}
+
                     </strong>
+
 
                 </div>
 
 
             </div>
+
+
+
+            <!-- ==========================
+                 VERIFICATION FOOTER
+            =========================== -->
 
 
             <div class="verification-footer">
 
+
+
+                <!-- DATABASE STATUS -->
+
+
                 <div class="database-status">
+
 
                     <span class="status-dot"></span>
 
-                    Verified in official database
+
+                    <span>
+
+                        Verified in official database
+
+                    </span>
+
 
                 </div>
 
 
-                ${
+
+                <!-- CERTIFICATE BUTTON -->
+
+
+                ${generateCertificateButton(
                     certificateLink
+                )}
 
-                    ?
-
-                    `
-
-                    <a
-                        href="${escapeAttribute(certificateLink)}"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="view-certificate-button"
-                    >
-
-                        <span>
-                            View Certificate
-                        </span>
-
-                        <span>
-                            ↗
-                        </span>
-
-                    </a>
-
-                    `
-
-                    :
-
-                    `
-
-                    <button
-                        class="view-certificate-button disabled-button"
-                        disabled
-                    >
-
-                        Certificate PDF Unavailable
-
-                    </button>
-
-                    `
-                }
 
             </div>
+
+
+
+            <!-- ==========================
+                 VERIFY ANOTHER
+            =========================== -->
 
 
             <a
@@ -329,6 +485,7 @@ function showVerifiedCertificate(certificate) {
 
             </a>
 
+
         </div>
 
     `;
@@ -337,12 +494,95 @@ function showVerifiedCertificate(certificate) {
 
 
 
-/* =========================================
-   NOT FOUND
-========================================= */
+// ==========================================
+// GENERATE CERTIFICATE BUTTON
+// ==========================================
 
 
-function showCertificateNotFound(certificateId) {
+function generateCertificateButton(
+    certificateLink
+) {
+
+
+    // ======================================
+    // CERTIFICATE LINK AVAILABLE
+    // ======================================
+
+
+    if (certificateLink) {
+
+
+        return `
+
+
+            <a
+                href="${escapeAttribute(
+                    certificateLink
+                )}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="view-certificate-button"
+            >
+
+
+                <span>
+
+                    View Certificate
+
+                </span>
+
+
+                <span aria-hidden="true">
+
+                    ↗
+
+                </span>
+
+
+            </a>
+
+        `;
+
+    }
+
+
+
+    // ======================================
+    // CERTIFICATE LINK NOT AVAILABLE
+    // ======================================
+
+
+    return `
+
+
+        <button
+            type="button"
+            class="
+                view-certificate-button
+                disabled-button
+            "
+            disabled
+        >
+
+            Certificate PDF Unavailable
+
+        </button>
+
+    `;
+
+}
+
+
+
+// ==========================================
+// CERTIFICATE NOT FOUND
+// ==========================================
+
+
+function showCertificateNotFound(
+    certificateId
+) {
+
 
     const result =
         document.getElementById("result");
@@ -350,14 +590,29 @@ function showCertificateNotFound(certificateId) {
 
     result.innerHTML = `
 
+
         <div class="result-card error-result">
+
+
+
+            <!-- ERROR ICON -->
 
 
             <div class="error-icon">
 
-                <span>×</span>
+
+                <span>
+
+                    ×
+
+                </span>
+
 
             </div>
+
+
+
+            <!-- ERROR BADGE -->
 
 
             <div class="invalid-badge">
@@ -367,6 +622,10 @@ function showCertificateNotFound(certificateId) {
             </div>
 
 
+
+            <!-- ERROR HEADING -->
+
+
             <h1>
 
                 Certificate Not Found
@@ -374,18 +633,30 @@ function showCertificateNotFound(certificateId) {
             </h1>
 
 
+
+            <!-- ERROR DESCRIPTION -->
+
+
             <p class="result-description">
 
                 We couldn't find a certificate matching
-                the provided ID in the official database.
+                the provided ID in the official
+                IKIGAI 2026 certificate database.
 
             </p>
 
 
+
+            <!-- INVALID ID -->
+
+
             <div class="invalid-id-box">
 
+
                 <span>
+
                     CERTIFICATE ID
+
                 </span>
 
 
@@ -395,7 +666,12 @@ function showCertificateNotFound(certificateId) {
 
                 </strong>
 
+
             </div>
+
+
+
+            <!-- RETURN BUTTON -->
 
 
             <a
@@ -416,12 +692,13 @@ function showCertificateNotFound(certificateId) {
 
 
 
-/* =========================================
-   INVALID REQUEST
-========================================= */
+// ==========================================
+// INVALID REQUEST
+// ==========================================
 
 
 function showInvalidRequest() {
+
 
     const result =
         document.getElementById("result");
@@ -429,27 +706,48 @@ function showInvalidRequest() {
 
     result.innerHTML = `
 
+
         <div class="result-card error-result">
+
+
 
             <div class="error-icon">
 
-                <span>!</span>
+
+                <span>
+
+                    !
+
+                </span>
+
 
             </div>
 
 
+
+            <div class="invalid-badge">
+
+                INVALID REQUEST
+
+            </div>
+
+
+
             <h1>
 
-                Invalid Verification Request
+                Certificate ID Missing
 
             </h1>
 
 
+
             <p class="result-description">
 
-                No certificate ID was provided.
+                No certificate ID was provided in
+                the verification request.
 
             </p>
+
 
 
             <a
@@ -461,6 +759,7 @@ function showInvalidRequest() {
 
             </a>
 
+
         </div>
 
     `;
@@ -469,12 +768,13 @@ function showInvalidRequest() {
 
 
 
-/* =========================================
-   SYSTEM ERROR
-========================================= */
+// ==========================================
+// SYSTEM ERROR
+// ==========================================
 
 
 function showSystemError() {
+
 
     const result =
         document.getElementById("result");
@@ -482,13 +782,31 @@ function showSystemError() {
 
     result.innerHTML = `
 
+
         <div class="result-card error-result">
+
+
 
             <div class="error-icon">
 
-                <span>!</span>
+
+                <span>
+
+                    !
+
+                </span>
+
 
             </div>
+
+
+
+            <div class="invalid-badge">
+
+                SYSTEM ERROR
+
+            </div>
+
 
 
             <h1>
@@ -498,12 +816,14 @@ function showSystemError() {
             </h1>
 
 
+
             <p class="result-description">
 
                 The certificate database could not
                 be loaded. Please try again later.
 
             </p>
+
 
 
             <a
@@ -515,6 +835,7 @@ function showSystemError() {
 
             </a>
 
+
         </div>
 
     `;
@@ -523,12 +844,31 @@ function showSystemError() {
 
 
 
-/* =========================================
-   UTILITIES
-========================================= */
+// ==========================================
+// NORMALIZE CERTIFICATE ID
+// ==========================================
+
+
+function normalizeCertificateId(value) {
+
+
+    return String(value || "")
+
+        .trim()
+
+        .toUpperCase();
+
+}
+
+
+
+// ==========================================
+// DELAY UTILITY
+// ==========================================
 
 
 function delay(milliseconds) {
+
 
     return new Promise(
 
@@ -545,39 +885,68 @@ function delay(milliseconds) {
 
 
 
+// ==========================================
+// ESCAPE HTML
+// Prevents certificate data from being
+// interpreted as HTML
+// ==========================================
+
+
 function escapeHTML(value) {
 
-    const div =
+
+    const element =
         document.createElement("div");
 
-    div.textContent =
-        value ?? "";
 
-    return div.innerHTML;
+    element.textContent =
+        String(value ?? "");
+
+
+    return element.innerHTML;
 
 }
 
+
+
+// ==========================================
+// ESCAPE HTML ATTRIBUTE
+// Used for certificate URLs
+// ==========================================
 
 
 function escapeAttribute(value) {
 
+
     return String(value ?? "")
 
-        .replaceAll("&", "&amp;")
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
 
-        .replaceAll('"', "&quot;")
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
 
-        .replaceAll("<", "&lt;")
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
 
-        .replaceAll(">", "&gt;");
+        .replaceAll(
+            ">",
+            "&gt;"
+        );
 
 }
 
 
 
-/* =========================================
-   START VERIFICATION
-========================================= */
+// ==========================================
+// START CERTIFICATE VERIFICATION
+// ==========================================
 
 
 verifyCertificate();

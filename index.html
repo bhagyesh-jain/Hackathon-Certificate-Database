@@ -1,254 +1,676 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>IKIGAI 2026 | Certificate Verification</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta
+        name="description"
+        content="Official IKIGAI 2026 Certificate Verification Portal"
+    >
+
+    <title>
+        IKIGAI 2026 | Certificate Verification
+    </title>
+
+
+    <!-- =====================================
+         APPLY THEME BEFORE PAGE LOAD
+         Prevents light/dark mode flashing
+    ====================================== -->
+
+    <script>
+
+        (function () {
+
+            const savedTheme =
+                localStorage.getItem("ikigai-theme");
+
+            const prefersLight =
+                window.matchMedia(
+                    "(prefers-color-scheme: light)"
+                ).matches;
+
+            const theme =
+                savedTheme ||
+                (prefersLight ? "light" : "dark");
+
+            document.documentElement.setAttribute(
+                "data-theme",
+                theme
+            );
+
+        })();
+
+    </script>
+
+
+    <!-- =====================================
+         GOOGLE FONTS
+    ====================================== -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
 
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
         rel="stylesheet"
     >
 
-    <link rel="stylesheet" href="style.css">
+
+    <!-- =====================================
+         MAIN STYLESHEET
+    ====================================== -->
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
 </head>
+
 
 <body>
 
-    <!-- Background Effects -->
 
-    <div class="background-effects">
+    <!-- =====================================
+         BACKGROUND EFFECTS
+    ====================================== -->
+
+    <div
+        class="background-effects"
+        aria-hidden="true"
+    >
+
         <div class="orb orb-one"></div>
+
         <div class="orb orb-two"></div>
+
         <div class="orb orb-three"></div>
+
         <div class="grid-overlay"></div>
+
     </div>
 
 
-    <!-- Navigation -->
+
+    <!-- =====================================
+         NAVIGATION
+    ====================================== -->
 
     <nav class="navbar">
 
-        <a href="index.html" class="brand">
-            <div class="brand-icon">I</div>
 
-            <div>
-                <span class="brand-name">IKIGAI</span>
-                <span class="brand-year">2026</span>
+        <!-- BRAND -->
+
+        <a
+            href="index.html"
+            class="brand"
+            aria-label="IKIGAI 2026 Home"
+        >
+
+            <div class="brand-icon">
+
+                I
+
             </div>
+
+
+            <div class="brand-information">
+
+                <span class="brand-name">
+
+                    IKIGAI
+
+                </span>
+
+
+                <span class="brand-year">
+
+                    2026
+
+                </span>
+
+            </div>
+
         </a>
 
-        <div class="nav-status">
-            <span class="status-dot"></span>
-            Verification Portal
+
+
+        <!-- NAVIGATION ACTIONS -->
+
+        <div class="nav-actions">
+
+
+            <!-- SYSTEM STATUS -->
+
+            <div class="nav-status">
+
+                <span class="status-dot"></span>
+
+                <span>
+                    Verification Portal
+                </span>
+
+            </div>
+
+
+
+            <!-- THEME TOGGLE -->
+
+            <button
+                id="themeToggle"
+                class="theme-toggle"
+                type="button"
+                aria-label="Change website theme"
+            >
+
+                <!--
+                    Content automatically added
+                    by theme.js
+                -->
+
+            </button>
+
+
         </div>
 
     </nav>
 
 
-    <!-- Main -->
+
+    <!-- =====================================
+         MAIN HERO
+    ====================================== -->
 
     <main class="hero">
 
+
         <section class="hero-content">
 
+
+            <!-- =================================
+                 OFFICIAL DATABASE BADGE
+            ================================== -->
+
             <div class="event-badge">
+
                 <span class="badge-dot"></span>
-                OFFICIAL CERTIFICATE DATABASE
+
+                <span>
+                    OFFICIAL CERTIFICATE DATABASE
+                </span>
+
             </div>
 
 
+
+            <!-- =================================
+                 HERO HEADING
+            ================================== -->
+
             <h1>
+
                 Verify your
-                <span>achievement.</span>
+
+                <span>
+                    achievement.
+                </span>
+
             </h1>
 
 
+
+            <!-- =================================
+                 HERO DESCRIPTION
+            ================================== -->
+
             <p class="hero-description">
-                Validate certificates issued to participants of
-                IKIGAI 2026 through our official verification portal.
+
+                Validate certificates issued to
+                participants of IKIGAI 2026 through
+                our official certificate verification
+                portal.
+
             </p>
 
 
-            <!-- Verification Card -->
+
+            <!-- =================================
+                 VERIFICATION CARD
+            ================================== -->
 
             <div class="verification-card">
 
+
+                <!-- DECORATIVE CARD GLOW -->
+
                 <div class="card-glow"></div>
+
+
+
+                <!-- CARD HEADER -->
 
                 <div class="card-header">
 
+
                     <div class="shield-icon">
+
                         ✓
+
                     </div>
 
-                    <div>
-                        <h2>Certificate Verification</h2>
+
+                    <div class="card-heading">
+
+                        <h2>
+
+                            Certificate Verification
+
+                        </h2>
+
 
                         <p>
-                            Enter the unique certificate ID printed
-                            on your certificate.
+
+                            Enter the unique certificate ID
+                            printed on your certificate.
+
                         </p>
+
                     </div>
 
                 </div>
 
 
+
+                <!-- =================================
+                     VERIFICATION FORM
+                ================================== -->
+
                 <form id="verificationForm">
 
+
                     <label for="certificateId">
+
                         Certificate ID
+
                     </label>
+
+
 
                     <div class="verification-input-group">
 
+
+                        <!-- INPUT -->
+
                         <div class="input-wrapper">
 
-                            <span class="input-icon">⌕</span>
+
+                            <span
+                                class="input-icon"
+                                aria-hidden="true"
+                            >
+
+                                ⌕
+
+                            </span>
+
 
                             <input
                                 type="text"
                                 id="certificateId"
+                                name="certificateId"
                                 placeholder="e.g. HACK26-A7K9X2"
                                 autocomplete="off"
+                                spellcheck="false"
                                 required
                             >
+
 
                         </div>
 
 
-                        <button type="submit">
 
-                            <span>Verify Certificate</span>
+                        <!-- VERIFY BUTTON -->
 
-                            <span class="button-arrow">→</span>
+                        <button
+                            type="submit"
+                            class="verify-button"
+                        >
+
+
+                            <span>
+
+                                Verify Certificate
+
+                            </span>
+
+
+                            <span
+                                class="button-arrow"
+                                aria-hidden="true"
+                            >
+
+                                →
+
+                            </span>
+
 
                         </button>
 
+
                     </div>
+
 
                 </form>
 
 
-                <div id="formError" class="form-error"></div>
 
+                <!-- =================================
+                     ERROR MESSAGE
+                ================================== -->
+
+                <div
+                    id="formError"
+                    class="form-error"
+                    role="alert"
+                    aria-live="polite"
+                >
+                </div>
+
+
+
+                <!-- =================================
+                     SECURITY MESSAGE
+                ================================== -->
 
                 <div class="security-message">
 
-                    <span>◆</span>
 
-                    Every certificate has a unique verification ID
-                    and secure QR code.
+                    <span
+                        class="security-icon"
+                        aria-hidden="true"
+                    >
+
+                        ◆
+
+                    </span>
+
+
+                    <span>
+
+                        Every certificate has a unique
+                        verification ID and secure QR code.
+
+                    </span>
+
 
                 </div>
+
 
             </div>
 
 
-            <!-- Stats -->
+
+            <!-- =================================
+                 STATISTICS
+            ================================== -->
 
             <div class="stats">
 
+
+                <!-- PARTICIPANTS -->
+
                 <div class="stat">
 
-                    <strong>329+</strong>
+                    <strong>
 
-                    <span>Participants</span>
+                        329+
+
+                    </strong>
+
+
+                    <span>
+
+                        Participants
+
+                    </span>
 
                 </div>
+
 
 
                 <div class="stat-divider"></div>
 
 
+
+                <!-- VERIFICATION -->
+
                 <div class="stat">
 
-                    <strong>100%</strong>
+                    <strong>
 
-                    <span>Verifiable</span>
+                        100%
+
+                    </strong>
+
+
+                    <span>
+
+                        Verifiable
+
+                    </span>
 
                 </div>
+
 
 
                 <div class="stat-divider"></div>
 
 
+
+                <!-- AVAILABILITY -->
+
                 <div class="stat">
 
-                    <strong>24/7</strong>
+                    <strong>
 
-                    <span>Online Access</span>
+                        24/7
+
+                    </strong>
+
+
+                    <span>
+
+                        Online Access
+
+                    </span>
 
                 </div>
+
 
             </div>
 
+
         </section>
+
 
     </main>
 
 
-    <!-- Footer -->
+
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
 
     <footer>
 
-        <div>
+
+        <div class="footer-copyright">
+
             © 2026 IKIGAI Hackathon
+
         </div>
 
+
+
         <div class="footer-status">
+
+
             <span class="status-dot"></span>
-            Verification System Online
+
+
+            <span>
+
+                Verification System Online
+
+            </span>
+
+
         </div>
+
 
     </footer>
 
 
+
+    <!-- =====================================
+         THEME SYSTEM
+    ====================================== -->
+
+    <script src="theme.js"></script>
+
+
+
+    <!-- =====================================
+         VERIFICATION FORM LOGIC
+    ====================================== -->
+
     <script>
 
         const verificationForm =
-            document.getElementById("verificationForm");
+            document.getElementById(
+                "verificationForm"
+            );
+
 
         const certificateInput =
-            document.getElementById("certificateId");
+            document.getElementById(
+                "certificateId"
+            );
+
 
         const formError =
-            document.getElementById("formError");
+            document.getElementById(
+                "formError"
+            );
 
+
+
+        // ==================================
+        // FORM SUBMISSION
+        // ==================================
 
         verificationForm.addEventListener(
             "submit",
-            function(event) {
+            function (event) {
+
+
+                // Prevent page refresh
 
                 event.preventDefault();
 
+
+
+                // Read certificate ID
+
                 const certificateId =
-                    certificateInput.value.trim();
+                    certificateInput
+                        .value
+                        .trim();
+
+
+
+                // Clear previous error
 
                 formError.textContent = "";
 
 
+
+                // ==================================
+                // VALIDATE INPUT
+                // ==================================
+
                 if (!certificateId) {
+
 
                     formError.textContent =
                         "Please enter a certificate ID.";
 
+
+                    certificateInput.focus();
+
+
                     return;
+
                 }
 
 
+
+                // ==================================
+                // REDIRECT TO VERIFICATION PAGE
+                // ==================================
+
                 window.location.href =
+
                     "verify.html?id=" +
-                    encodeURIComponent(certificateId);
+
+                    encodeURIComponent(
+                        certificateId
+                    );
+
+
+            }
+        );
+
+
+
+        // ==================================
+        // CLEAR ERROR WHEN USER TYPES
+        // ==================================
+
+        certificateInput.addEventListener(
+            "input",
+            function () {
+
+
+                if (formError.textContent) {
+
+                    formError.textContent = "";
+
+                }
+
 
             }
         );
 
     </script>
 
+
 </body>
+
 </html>
